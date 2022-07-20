@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/blocs/tracks_bloc/bloc/tracks_bloc.dart';
+import 'package:music_app/widgets/track_card_widget.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,17 +15,20 @@ class HomePage extends StatelessWidget {
           child: BlocConsumer<TracksBloc, TracksState>(
             listener: (context, state) {},
             builder: (context, state) {
-              print(state);
               if (state is TracksLoading) {
                 return const Center(child: CircularProgressIndicator());
               }
 
               if (state is TracksLoaded) {
                 return ListView.builder(
+                  physics: const BouncingScrollPhysics(),
                   itemCount: state.tracks?.length,
                   itemBuilder: ((context, index) {
                     final track = state.tracks?.elementAt(index);
-                    return Text(track?.trackName ?? '');
+                    return TrackCard(
+                      track,
+                      onTap: () {},
+                    );
                   }),
                 );
               }
