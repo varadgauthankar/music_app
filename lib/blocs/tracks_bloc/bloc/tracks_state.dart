@@ -12,12 +12,12 @@ class TracksInitial extends TracksState {}
 class TracksLoading extends TracksState {}
 
 class TracksLoaded extends TracksState {
-  final List<Track> tracks;
+  final List<Track>? tracks;
 
   const TracksLoaded({required this.tracks});
 
   @override
-  List<Object> get props => [tracks];
+  List<Object> get props => [tracks!];
 }
 
 class TracksError extends TracksState {}
