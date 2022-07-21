@@ -51,6 +51,7 @@ class TrackDetailsPage extends StatelessWidget {
         ],
       ),
       body: ListView(
+        shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         children: [
           BlocProvider(
@@ -61,7 +62,9 @@ class TrackDetailsPage extends StatelessWidget {
               builder: (context, state) {
                 // loading state
                 if (state is TrackDetailsLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return SizedBox(
+                      height: 50.h,
+                      child: const Center(child: CircularProgressIndicator()));
                 }
 
                 // loaded state
@@ -95,17 +98,26 @@ class TrackDetailsPage extends StatelessWidget {
               builder: (context, state) {
                 // loading state
                 if (state is TrackLyricsLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Align(
+                    alignment: Alignment.center,
+                    child: Center(child: Text('Loading lyrics...')),
+                  );
                 }
 
                 // loaded state
                 if (state is TrackLyricsLoaded) {
                   return Padding(
-                    padding: const EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.all(14.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Lyrics'),
+                        Text(
+                          'Lyrics',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14.sp,
+                          ),
+                        ),
                         Text(state.lyrics),
                       ],
                     ),
@@ -115,7 +127,7 @@ class TrackDetailsPage extends StatelessWidget {
                 // error state
                 if (state is TrackLyricsError) {
                   return const Center(
-                    child: Text('Something went wrong!'),
+                    child: Text('Something went wrong loading lyrics!'),
                   );
                 }
 
