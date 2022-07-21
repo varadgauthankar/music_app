@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: ((context) => const BookMarkPage())),
               ),
-              icon: const Icon(Icons.bookmark_outline),
+              icon: const Icon(Icons.bookmarks_outlined),
             )
           ],
         ),
