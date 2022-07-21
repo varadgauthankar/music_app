@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music_app/models/models.dart';
 import 'package:music_app/models/track.dart';
-import 'package:music_app/pages/track_details_page.dart';
 import 'package:music_app/utils/helpers.dart';
 import 'package:sizer/sizer.dart';
 
