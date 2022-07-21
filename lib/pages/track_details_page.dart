@@ -14,6 +14,7 @@ class TrackDetailsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: ListView(
+        physics: const BouncingScrollPhysics(),
         children: [
           BlocProvider(
             create: (context) =>
@@ -22,7 +23,7 @@ class TrackDetailsPage extends StatelessWidget {
               listener: (context, state) {},
               builder: (context, state) {
                 if (state is TrackDetailsLoading) {
-                  return const CircularProgressIndicator();
+                  return const Center(child: CircularProgressIndicator());
                 }
 
                 if (state is TrackDetailsLoaded) {
@@ -51,16 +52,19 @@ class TrackDetailsPage extends StatelessWidget {
               listener: (context, state) {},
               builder: (context, state) {
                 if (state is TrackLyricsLoading) {
-                  return const CircularProgressIndicator();
+                  return const Center(child: CircularProgressIndicator());
                 }
 
                 if (state is TrackLyricsLoaded) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('Lyrics'),
-                      Text(state.lyrics),
-                    ],
+                  return Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('Lyrics'),
+                        Text(state.lyrics),
+                      ],
+                    ),
                   );
                 }
 
