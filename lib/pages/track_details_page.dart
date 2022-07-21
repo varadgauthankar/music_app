@@ -107,7 +107,8 @@ class TrackDetailsPage extends StatelessWidget {
                 // loaded state
                 if (state is TrackLyricsLoaded) {
                   return Padding(
-                    padding: const EdgeInsets.all(14.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 14.0, vertical: 4.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
