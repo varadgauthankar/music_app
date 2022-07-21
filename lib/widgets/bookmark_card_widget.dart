@@ -15,7 +15,7 @@ class BookmarkCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       child: Material(
         // colorScheme() just to reduce repeated code
         color: colorScheme(context).primaryContainer,
