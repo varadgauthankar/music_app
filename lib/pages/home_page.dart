@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/blocs/tracks_bloc/bloc/tracks_bloc.dart';
+import 'package:music_app/pages/books_mark_page.dart';
 import 'package:music_app/pages/track_details_page.dart';
 import 'package:music_app/widgets/track_card_widget.dart';
 
@@ -10,7 +11,18 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Tracks')),
+        appBar: AppBar(
+          title: const Text('Tracks'),
+          actions: [
+            IconButton(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: ((context) => const BookMarkPage())),
+              ),
+              icon: const Icon(Icons.bookmark_outline),
+            )
+          ],
+        ),
         body: BlocProvider(
           create: (context) => TracksBloc()..add(GetTracksEvent()),
           child: BlocConsumer<TracksBloc, TracksState>(

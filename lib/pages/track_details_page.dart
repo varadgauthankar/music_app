@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:music_app/blocs/bookmark_bloc/bloc/bookmark_bloc.dart';
 import 'package:music_app/blocs/track_details_bloc/bloc/track_details_bloc.dart';
 import 'package:music_app/models/models.dart';
 import 'package:music_app/utils/helpers.dart';
@@ -12,7 +13,43 @@ class TrackDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          // handling the bookmark button
+          BlocProvider(
+            create: (context) =>
+                BookmarkBloc()..add(CheckForBookmarkEvent(track!)),
+            child: BlocBuilder<BookmarkBloc, BookmarkState>(
+              builder: (context, state) {
+                // if track is bookmarked, remove it.
+                if (state is TrackIsBookmarkedState) {
+                  return IconButton(
+                    onPressed: () {
+                      BlocProvider.of<BookmarkBloc>(context)
+                          .add(RemoveFromBookmarkEvent(track!));
+                    },
+                    icon: const Icon(Icons.bookmark),
+                  );
+                }
+
+                // if track is NOT bookmarked, add it.
+
+                if (state is TrackIsNotBookmarkedState) {
+                  return IconButton(
+                    onPressed: () {
+                      BlocProvider.of<BookmarkBloc>(context)
+                          .add(AddToBookmarkEvent(track!));
+                    },
+                    icon: const Icon(Icons.bookmark_outline),
+                  );
+                }
+
+                return const SizedBox.shrink();
+              },
+            ),
+          )
+        ],
+      ),
       body: ListView(
         physics: const BouncingScrollPhysics(),
         children: [
@@ -22,19 +59,24 @@ class TrackDetailsPage extends StatelessWidget {
             child: BlocConsumer<TrackDetailsBloc, TrackDetailsState>(
               listener: (context, state) {},
               builder: (context, state) {
+                // loading state
                 if (state is TrackDetailsLoading) {
                   return const Center(child: CircularProgressIndicator());
                 }
 
+                // loaded state
                 if (state is TrackDetailsLoaded) {
                   return _buildTrackDetailsCard(context, state);
                 }
 
-                if (state is TrackDetails) {
+                // error state
+                if (state is TrackDetailsError) {
                   return const Center(
                     child: Text('Something went wrong!'),
                   );
                 }
+
+                // else
                 return Container();
               },
             ),
@@ -51,10 +93,12 @@ class TrackDetailsPage extends StatelessWidget {
             child: BlocConsumer<TrackDetailsBloc, TrackDetailsState>(
               listener: (context, state) {},
               builder: (context, state) {
+                // loading state
                 if (state is TrackLyricsLoading) {
                   return const Center(child: CircularProgressIndicator());
                 }
 
+                // loaded state
                 if (state is TrackLyricsLoaded) {
                   return Padding(
                     padding: const EdgeInsets.all(12.0),
@@ -68,11 +112,14 @@ class TrackDetailsPage extends StatelessWidget {
                   );
                 }
 
+                // error state
                 if (state is TrackLyricsError) {
                   return const Center(
                     child: Text('Something went wrong!'),
                   );
                 }
+
+                // else
                 return Container();
               },
             ),

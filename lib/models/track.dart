@@ -1,4 +1,6 @@
-class Track {
+import 'package:equatable/equatable.dart';
+
+class Track extends Equatable {
   int? trackId;
   String? trackName;
   String? albumName;
@@ -26,4 +28,7 @@ class Track {
     data['artist_name'] = artistName;
     return data;
   }
+
+  @override
+  List<Object?> get props => [trackId, trackName, albumName, artistName];
 }
