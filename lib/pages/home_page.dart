@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/blocs/tracks_bloc/bloc/tracks_bloc.dart';
+import 'package:music_app/pages/track_details_page.dart';
 import 'package:music_app/widgets/track_card_widget.dart';
 
 class HomePage extends StatelessWidget {
@@ -27,7 +28,11 @@ class HomePage extends StatelessWidget {
                     final track = state.tracks?.elementAt(index);
                     return TrackCard(
                       track,
-                      onTap: () {},
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: ((context) => TrackDetailsPage(track)),
+                          )),
                     );
                   }),
                 );
